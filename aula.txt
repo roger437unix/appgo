@@ -1,0 +1,9 @@
+
+1. Inicializar o projeto
+go mod init github.com/roger437unix/appgo
+
+2. Criar arquivo fonte
+touch main.go
+
+3. Após criar a api instalar as libs
+go mod tidy
