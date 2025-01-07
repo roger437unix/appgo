@@ -35,3 +35,93 @@ git checkout main
 git merge api-01
 
 git push origin main
+
+------------------------------------
+
+7. Criar container com banco de dados PostgreSQL
+Obs.: Na raiz do projeto
+
+touch docker-compose.yaml
+
+psql -Utux -W -h 127.0.0.1 db_loja
+
+db_loja-# \du
+db_loja=# select user;
+
+db_loja-# \l
+db_loja-# \dt
+
+db_loja=# CREATE TABLE product (
+id SERIAL PRIMARY KEY,
+product_name VARCHAR(50) NOT NULL,
+price NUMERIC(10, 2) NOT NULL );
+
+db_loja=# \dt
+
+db_loja=# INSERT INTO product (product_name, price) VALUES ('Tênis Salomon', 1200);
+db_loja=# INSERT INTO product (product_name, price) VALUES ('Tênis Adidas', 800);
+
+db_loja=# SELECT * FROM product;
+
+------------------------------------
+
+* Rota para consumir os dados do banco
+* Criar rota para consultar produtos
+
+8. Criar um model contendo uma struct de acordo com o esquema do banco
+
+mkdir model                                                                                                                                            git:main*
+touch model/product.go 
+
+package model
+
+type Product struct {
+	ID    int     `json:"id_product"`
+	Name  string  `json:"name"`
+	Price float64 `json:"price"`
+}
+
+
+9. Criar um controller que irá receber a requisição e retornar a resposta
+
+mkdir controller
+touch controller/product_controller.go
+
+<Código em controller/product_controller.go>
+
+
+9. Mapear a rota de controller/GetProducts na função main()
+
+<Código em cmd/main.go>
+
+
+10. Após código criado, para executar
+go run cmd/main.go
+
+curl localhost:8000/products && echo
+
+------------------------------------
+
+6. Enviar para o Github
+
+echo "Criado banco e teste de API local" > README.md
+
+git branch
+
+git checkout -b api-02
+
+git status
+
+git add .
+
+git commit -m "Criado banco e teste de API local"
+
+git push -u origin api-02
+
+git checkout main
+
+git merge api-02
+
+git push origin main
+
+------------------------------------

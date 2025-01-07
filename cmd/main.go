@@ -1,15 +1,15 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/roger437unix/appgo/controller"
+)
 
 func main() {
 	server := gin.Default()
 
-	server.GET("/ping", func(ctx *gin.Context) {
-		ctx.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-
+	// Camada de controllers
+	ProductController := controller.NewProductController()
+	server.GET("/products", ProductController.GetProducts)
 	server.Run(":8000")
 }
