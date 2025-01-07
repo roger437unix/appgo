@@ -3,7 +3,35 @@
 go mod init github.com/roger437unix/appgo
 
 2. Criar arquivo fonte
-touch main.go
+mkdir cmd && touch cmd/main.go
 
-3. Após criar a api instalar as libs
-go mod tidy
+3. Instalar o Gin 
+go get github.com/gin-gonic/gin
+
+4. Criar imagem docker
+docker build --tag miiapigo .
+
+5. Executar imagem docker
+docker run -d --rm --name miiapigo -p 8000:8000 miiapigo
+
+------------------------------------
+
+6. Enviar para o Github
+
+git branch
+
+git checkout -b api-01
+
+git status
+
+git add .
+
+git commit -m "Add user migration"
+
+git push -u origin fiber-project7-migration
+
+git checkout main
+
+git merge fiber-project7-migration
+
+git push origin main
