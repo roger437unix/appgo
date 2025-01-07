@@ -28,4 +28,10 @@ git add .
 
 git commit -m "Etapa de teste da API"
 
-git push -u origin api-01
+git push -u origin api-01 
+
+git checkout main
+
+git merge api-01
+
+git push origin main
