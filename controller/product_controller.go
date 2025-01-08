@@ -4,26 +4,30 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/roger437unix/appgo/model"
+	"github.com/roger437unix/appgo/usecase"
 )
 
 type productController struct {
 	// Usercase
+	productUsecase usecase.ProductUsecase
 }
 
-func NewProductController() productController {
-	return productController{}
+func NewProductController(usecase usecase.ProductUsecase) productController {
+	return productController{
+		productUsecase: usecase,
+	}
 }
 
 // Para tratar a requisição
 func (p *productController) GetProducts(ctx *gin.Context) {
-	// Por enquanto apenas testar o controller com dados locais
-	products := []model.Product{
-		{
-			ID:    1,
-			Name:  "Batata frita",
-			Price: 20.00,
-		},
+
+	products, err := p.productUsecase.GetProducts()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
 	}
+
 	ctx.JSON(http.StatusOK, products)
 }

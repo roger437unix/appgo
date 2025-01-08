@@ -104,26 +104,74 @@ curl localhost:8000/products && echo
 
 6. Enviar para o Github
 
-echo "Criado banco e teste de API local" > README.md
+echo "Criar e conectar outras camadas e conexão banco PostgreSQL fazendo SELECT" > README.md
 
 git branch
 
-git checkout -b api-02
+git checkout -b api-03
 
 git status
 
 git add .
 
-git commit -m "Criado banco e teste de API local"
+git commit -m "Criar e conectar outras camadas e conexão banco PostgreSQL fazendo SELECT"
 
-git push -u origin api-02
+git push -u origin api-03
 
 git checkout main
 
-git merge api-02
+git merge api-03
 
 echo '![](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fi%2Fmomlxonvpnzkp9i4frwn.png)' > README.md
 
 git push origin main
 
 ------------------------------------
+
+* Criar camada de usecase
+
+mkdir usecase                                                                                                                                          
+touch usecase/product_usecase.go 
+
+<Código em usecase/product_usecase.go>
+
+=> Atualizar controller/product_controller.go
+
+----------------------------------------------
+
+* Criar conexão com banco de dados
+
+mkdir db
+touch db/conn.go
+
+<Código em db/conn.go>
+
+=> Atualizar cmd/main.go
+
+----------------------------------------------
+
+* Criar camada Repository
+
+mkdir repository
+touch repository/product_repository.go
+
+<Código em repository/product_repository.go>
+
+----------------------------------------------
+
+* Conectar as camadas
+
+- usecase/product_usecase
+- cmd/main.go [Inicializar repository]
+- controller/product_controller 
+- usecase/product_usecase
+
+-> Adicionar em db/conn.go em package
+_ "github.com/lib/pq"
+
+-> Executar no terminal
+go mod tidy
+
+----------------------------------------------
+
+goto 6
